@@ -38,6 +38,13 @@ This method to be called to open the database
 DatabaseSingleton.sharedInstance.openDb(DBname: "TestDatabase.sqlite")
 ```
 
+This method to be called to close the database
+
+```
+DatabaseSingleton.sharedInstance.closeDB()
+```
+
+
  If this flag is false wont print query errors on the log
 
 ```
