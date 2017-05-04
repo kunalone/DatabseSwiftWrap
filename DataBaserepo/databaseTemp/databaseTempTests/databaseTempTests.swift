@@ -13,6 +13,9 @@ class databaseTempTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        let viewController = ViewController()
+        viewController.trayingAllDatabse()
+        
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     

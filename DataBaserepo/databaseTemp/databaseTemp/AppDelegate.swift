@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         DatabaseSingleton.sharedInstance.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
-        
         DatabaseSingleton.sharedInstance.openDb(DBname: "TestDatabase.sqlite")
         return true
     }
@@ -41,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        DatabaseSingleton.sharedInstance.closeDB()
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 

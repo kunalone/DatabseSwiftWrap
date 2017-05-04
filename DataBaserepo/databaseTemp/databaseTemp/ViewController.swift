@@ -13,6 +13,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+        trayingAllDatabse()
+        
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func trayingAllDatabse(){
         let emptyArray:[AnyObject] = []
         
         // If this flag is false wont print query errors on the log
@@ -48,9 +55,6 @@ class ViewController: UIViewController {
                 // transcation executed successfully
             }
         }
-        
-        
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
