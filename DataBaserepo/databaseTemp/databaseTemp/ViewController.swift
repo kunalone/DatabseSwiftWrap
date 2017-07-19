@@ -15,17 +15,83 @@ class ViewController: UIViewController {
         
        
         trayingAllDatabse()
-        
+        saveData()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    //let aStr = String(format: "%@%x", "timeNow in hex: ", timeNow)
+
+    func saveData () {
+        let emptyArray:[AnyObject] = []
+        for index in 0 ... 10 {
+            let strName = String(format:"Kunal%d",index)
+            let result = DatabaseSingleton.executeUpdate(queryString: "INSERT INTO StudentInfo Values('\(strName)','Pune','314')", parameters: emptyArray)
+            if result == true{
+                //executed successflly
+            }
+        }
+        let result = DatabaseSingleton.executeUpdate(queryString: "INSERT INTO StudentInfo Values('Kunal iOS abcd a ddfdf asdf asdf Developer sdf sdf','Pune','314')", parameters: emptyArray)
+        if result == true{
+            //executed successflly
+        }
+
+        /*
+        let dataArray = ["Kunal", "Pune", "314"]
+        
+        let string = "INSERT INTO StudentInfo Values('?','?','?')"
+        
+        let threeDoubles = Array(repeating: dataArray, count: 1000)
+
+        
+        DatabaseSingleton.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
+            if result == true{
+                print("transaction successful")
+                // transcation executed successfully
+            }
+        }
+*/
+        let theData = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE StudentInfo MATCH 'Kunal1'")
+        
+        print(theData)
+        
+        let theData1 = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo")
+        print(theData1)
+
+        
+        //SELECT * FROM docs WHERE body MATCH 'title: ^lin*';
+        
+        //Search : -- All StudentInfo begins with "Kun".
+
+        let theData3 = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE StudentInfo MATCH '^Kun*'")
+        print(theData3)
+        
+        //Search(Phrase queries) : -- All StudentInfo in column "address" begins with "Pune".
+
+        let theData4 = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE address MATCH 'address: ^Pune'")
+        print(theData4)
+
+        //Search : All StudentInfo that contain the phrase "iOS Developer".
+        let theData5 = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE StudentInfo MATCH '\"iOS Developer\"'")
+        print(theData5)
+
+        /*-- Search for a StudentInfo that contains the terms "ios" and "Developer" with
+         -- not more than 6 intervening terms. This also matches the only document in
+         table StudentInfo.
+         */
+
+        let theData6 = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE StudentInfo MATCH 'ios NEAR/7 Developer'")
+        print(theData6)
+        
+
+
     }
     
     func trayingAllDatabse(){
         let emptyArray:[AnyObject] = []
         
         // If this flag is false wont print query errors on the log
-        DatabaseSingleton.sharedInstance.enableLog = true
+        DatabaseSingleton.enableLog = true
         
-        let result = DatabaseSingleton.sharedInstance.executeUpdate(queryString: "INSERT INTO Student Values('Kunal','Pune','314')", parameters: emptyArray)
+        let result = DatabaseSingleton.executeUpdate(queryString: "INSERT INTO Student Values('Kunal','Pune','314')", parameters: emptyArray)
         
         if result == true{
             //executed successflly
@@ -33,13 +99,13 @@ class ViewController: UIViewController {
         
         let updateQuery:String = "UPDATE Student SET name = ? Where address = ?"
         
-        let updateResult = DatabaseSingleton.sharedInstance.executeUpdate(queryString: updateQuery, parameters: ["One" as AnyObject,"pune" as AnyObject])
+        let updateResult = DatabaseSingleton.executeUpdate(queryString: updateQuery, parameters: ["One" as AnyObject,"pune" as AnyObject])
         
         if updateResult == true {
             //executed successflly
         }
         
-        let theData = DatabaseSingleton.sharedInstance.executeQuery(queryString: "SELECT * FROM Student")
+        let theData = DatabaseSingleton.executeQuery(queryString: "SELECT * FROM Student")
         
         print(theData)
         
@@ -49,7 +115,7 @@ class ViewController: UIViewController {
         
         let threeDoubles = Array(repeating: dataArray, count: 1000)
         
-        DatabaseSingleton.sharedInstance.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
+        DatabaseSingleton.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
             if result == true{
                 print("transaction successful")
                 // transcation executed successfully

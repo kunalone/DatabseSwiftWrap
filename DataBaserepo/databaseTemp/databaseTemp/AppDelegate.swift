@@ -16,8 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        DatabaseSingleton.sharedInstance.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
-        DatabaseSingleton.sharedInstance.openDb(DBname: "TestDatabase.sqlite")
+        DatabaseSingleton.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
+        DatabaseSingleton.openDb(DBname: "TestDatabase.sqlite")
+        //DatabaseSingleton.openDb(DBname: "TestDatabase.sqlite")
         return true
     }
 
