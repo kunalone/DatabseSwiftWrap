@@ -11,11 +11,8 @@ Copy or clone the repository on your mac, find DatabaseSingleton.swift file in t
 
 ### Prerequisites
 
-Xcode with  swift 3 support, thats it! :)
-
-```
-Give examples
-```
+Xcode 8 and above
+SQlite3
 
 ### Installing
 
@@ -27,28 +24,28 @@ This method is used to copy database from main applications bundle to doccument 
 - parameter dbName: dbName A name of the database to be copied from main bundle
 - parameter ofType: An extension of the db like db,sqlite
 
-```
-DatabaseSingleton.sharedInstance.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
+```swift
+DatabaseSingleton.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
 ```
 
 This method to be called to open the database
 - parameter DBname: String of database name Exa: "Data.sqlite"
 
-```
-DatabaseSingleton.sharedInstance.openDb(DBname: "TestDatabase.sqlite")
+```swift
+DatabaseSingleton.openDb(DBname: "TestDatabase.sqlite")
 ```
 
 This method to be called to close the database
 
-```
-DatabaseSingleton.sharedInstance.closeDB()
+```swift
+DatabaseSingleton.closeDB()
 ```
 
 
  If this flag is false wont print query errors on the log
 
-```
-DatabaseSingleton.sharedInstance.enableLog = true
+```swift
+DatabaseSingleton.enableLog = true
 ```
 
 This method is to execute update like queries like UPDATE, DELETE, INSERT
@@ -56,8 +53,8 @@ This method is to execute update like queries like UPDATE, DELETE, INSERT
 - parameter parameters: Array of all the parameters to be added in queries
 - return BOOL: Success or failure of the query execution
 
-```
-let result = DatabaseSingleton.sharedInstance.executeUpdate(queryString: "INSERT INTO Student Values('Kunal','Pune','314')", parameters: emptyArray)
+```swift
+let result = DatabaseSingleton.executeUpdate(queryString: "INSERT INTO Student Values('Kunal','Pune','314')", parameters: emptyArray)
 
 if result == true{
 //executed successflly
@@ -65,7 +62,7 @@ if result == true{
 
 let updateQuery:String = "UPDATE Student SET name = ? Where address = ?"
 
-let updateResult = DatabaseSingleton.sharedInstance.executeUpdate(queryString: updateQuery, parameters: ["One" as AnyObject,"pune" as AnyObject])
+let updateResult = DatabaseSingleton.executeUpdate(queryString: updateQuery, parameters: ["One" as AnyObject,"pune" as AnyObject])
 
 if updateResult == true {
 //executed successflly
@@ -77,10 +74,9 @@ All kind of select queries has to use this method
 - parameter queryString:  the query Exa: SELECT * from TableName
 - return [AnyObject]: Array of dictonary [String: String]
 
-```
-let theData = DatabaseSingleton.sharedInstance.executeQuery(queryString: "SELECT * FROM Student")
+```swift
+let theData = DatabaseSingleton.executeQuery(queryString: "SELECT * FROM Student")
 
-print(theData)
 ```
 
 This method is for transaction operations for same query and multiple parameteres
@@ -88,22 +84,22 @@ This method is for transaction operations for same query and multiple parametere
 - parameter dataArray: This is array of arrays with values for the query to be    executed in transcation
 - return completion: This is completion handler which will return true for the Successful execution
 
-```
+```swift
 let threeDoubles = Array(repeating: dataArray, count: 1000)
 
-DatabaseSingleton.sharedInstance.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
+DatabaseSingleton.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
 if result == true{
 print("transaction successful")
 // transcation executed successfully
 }
 }
 ```
-
+For FTS tables methods with same code flow are implemented in sample code above you can expore them fell free toi let me know the issues and contributing. 
 
 ## Built With
 
 * [Swift 3](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0) - Swift language used
-
+* [Sqlite 3](https://www.sqlite.org/fts3.html) - sqlite FTS concepts are used
 
 ## Authors
 

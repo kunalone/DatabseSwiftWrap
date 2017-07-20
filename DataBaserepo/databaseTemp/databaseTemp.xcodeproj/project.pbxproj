@@ -17,7 +17,7 @@
 		041928051EA5DCA000BCBEE4 /* DatabaseSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041928041EA5DCA000BCBEE4 /* DatabaseSingleton.swift */; };
 		0419280D1EA5DD7100BCBEE4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0419280B1EA5DD7100BCBEE4 /* libsqlite3.0.tbd */; };
 		0419280E1EA5DD7100BCBEE4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0419280C1EA5DD7100BCBEE4 /* libsqlite3.tbd */; };
-		04C1C2321EB31B3B002B5395 /* TestDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 04C1C2311EB31B3B002B5395 /* TestDatabase.sqlite */; };
+		E92E06DA1F0B6C2900C3BACA /* TestDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E92E06D91F0B6C2900C3BACA /* TestDatabase.sqlite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,7 @@
 		041928061EA5DD5900BCBEE4 /* databaseTemp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "databaseTemp-Bridging-Header.h"; sourceTree = "<group>"; };
 		0419280B1EA5DD7100BCBEE4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		0419280C1EA5DD7100BCBEE4 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		04C1C2311EB31B3B002B5395 /* TestDatabase.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDatabase.sqlite; sourceTree = "<group>"; };
+		E92E06D91F0B6C2900C3BACA /* TestDatabase.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDatabase.sqlite; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 				041927D61EA5DC5000BCBEE4 /* AppDelegate.swift */,
 				041928041EA5DCA000BCBEE4 /* DatabaseSingleton.swift */,
 				041927D81EA5DC5000BCBEE4 /* ViewController.swift */,
-				04C1C2311EB31B3B002B5395 /* TestDatabase.sqlite */,
+				E92E06D91F0B6C2900C3BACA /* TestDatabase.sqlite */,
 				041927DA1EA5DC5000BCBEE4 /* Main.storyboard */,
 				041927DD1EA5DC5000BCBEE4 /* Assets.xcassets */,
 				041927DF1EA5DC5000BCBEE4 /* LaunchScreen.storyboard */,
@@ -257,7 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04C1C2321EB31B3B002B5395 /* TestDatabase.sqlite in Resources */,
+				E92E06DA1F0B6C2900C3BACA /* TestDatabase.sqlite in Resources */,
 				041927E11EA5DC5000BCBEE4 /* LaunchScreen.storyboard in Resources */,
 				041927DE1EA5DC5000BCBEE4 /* Assets.xcassets in Resources */,
 				041927DC1EA5DC5000BCBEE4 /* Main.storyboard in Resources */,
@@ -441,6 +441,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = databaseTemp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.neosofttech.databaseTemp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -456,6 +457,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = databaseTemp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.neosofttech.databaseTemp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
