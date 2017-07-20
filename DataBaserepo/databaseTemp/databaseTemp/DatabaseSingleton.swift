@@ -78,7 +78,7 @@ class DatabaseSingleton {
                     completion(true)
                 }
                 else{
-                    //..self.printOnLog(text: "Transaction failed")
+                    //self.printOnLog(text: "Transaction failed")
                     completion(false)
                 }
             }
@@ -112,12 +112,51 @@ class DatabaseSingleton {
         }
         return array
     }
+    /**
+     This method is to execute update FTS tables like queries like UPDATE, DELETE, INSERT
+     - parameter queryString: String of query to be executed with "?" at the place of arguments EXA- Insert into Table (_id, ColumnName) Values(?,?)
+     - parameter parameters: Array of all the parameters to be added in queries
+     - return BOOL: Success or failure of the query execution
+     */
+    public class func executeUpdateForFTS4(queryString:String , parameters: [AnyObject])->Bool{
+        var returnValue = false
+        serialQueue.sync {
+            //DB.trial()
+            returnValue = DB.executUpdate(queryString: queryString, parameters: parameters)
+        }
+        return returnValue
+    }
+    /**
+     All kind of select queries for FTS table has to use this method
+     - parameter queryString:  the query Exa: SELECT * from TableName
+     - return [AnyObject]: Array of dictonary [String: String]
+     */
     public class func executeQueryForFTS4(queryString :String)->[AnyObject]{
         var array:[AnyObject] = []
         serialQueue.sync {
             array = DB.executeCcommandForFTS4(query: queryString)
         }
         return array
+    }
+    /**
+     This method is for transaction operations on FTS table for same query and multiple parameteres
+     - parameter query: String of query to be executed with "?" at the place of arguments EXA: Insert into Table (_id, ColumnName) Values(?,?)
+     - parameter dataArray: This is array of arrays with values for the query to be    executed in transcation
+     - return completion: This is completion handler which will return true for the Successful execution
+     */
+    public class func transactionWithParametersFTS4(query: String, dataArray:[[AnyObject]],completion: @escaping successCompletaionHandler){
+        serialQueue.sync {
+            self.DB.transactionFTS4(qureyString: query, parameres: dataArray) { (result) in
+                if result == true{
+                    self.printOnLog(text: "Transaction working")
+                    completion(true)
+                }
+                else{
+                    //self.printOnLog(text: "Transaction failed")
+                    completion(false)
+                }
+            }
+        }
     }
 
     /**
@@ -320,7 +359,7 @@ fileprivate struct TheDB {
         
     }
     
-    //Fetching data from ftp4 db
+    //Fetching data from fts4 db
     fileprivate mutating func executeCcommandForFTS4(query: String)->[AnyObject]{
         var returnArray: [AnyObject] = []
         var pStmt: OpaquePointer? = nil
@@ -354,8 +393,76 @@ fileprivate struct TheDB {
         return returnArray
     }
 
+    fileprivate func transactionFTS4(qureyString: String, parameres : [[AnyObject]],completion :@escaping successCompletaionHandler){
+        var transacstionStatus = true;
+        
+        sqlite3_exec(sqliteDB, "BEGIN EXCLUSIVE TRANSACTION", nil, nil, nil);
+        let buffer = qureyString;
+        var statement: OpaquePointer? = nil
+        sqlite3_prepare_v2(sqliteDB, buffer, Int32(strlen(buffer)),&statement, nil)
+        
+        for array:Array in parameres {
+            for (index,item) in array.enumerated() {
+                let theIndex = index + 1
+                
+                if item is String {
+                    sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
+                }
+                else{
+                    DatabaseSingleton.printOnLog(text: "Commit Failed!")
+                    DatabaseSingleton.printOnLog(text: "For FTS4 transaction every entry shoud be String")
+                    transacstionStatus = false
+                    completion(transacstionStatus)
+                }
+            }
+            
+            if sqlite3_step(statement) != SQLITE_DONE {
+                let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
+                DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)")
+                DatabaseSingleton.printOnLog(text: "Commit Failed!")
+                transacstionStatus = false
+                completion(false)
+            }
+            sqlite3_reset(statement)
+        }
+        
+        if transacstionStatus != false {
+            completion(transacstionStatus)
+        }
+        sqlite3_exec(sqliteDB, "COMMIT TRANSACTION", nil, nil, nil)
+        sqlite3_finalize(statement)
+    }
     
-    
-    
+    fileprivate func executUpdateForFTS4(queryString: String, parameters: [AnyObject])->Bool{
+        var returnValue = false
+        var statement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(sqliteDB, queryString, -1, &statement, nil) == SQLITE_OK {
+            
+            for (index,item) in parameters.enumerated() {
+                let theIndex = index + 1
+                
+                if item is String {
+                    sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
+                }
+                else{
+                    DatabaseSingleton.printOnLog(text: "Commit Failed!")
+                    DatabaseSingleton.printOnLog(text: "For FTS4 transaction every entry shoud be String")
+                    return false
+                }
+            }
+            
+            if sqlite3_step(statement) == SQLITE_DONE {
+                returnValue = true
+                DatabaseSingleton.printOnLog(text: "Successfully executed query");
+            } else {
+                DatabaseSingleton.printOnLog(text: "Failed executed query");
+            }
+        } else {
+            DatabaseSingleton.printOnLog(text: "Error while Executing -> \(queryString)");
+            let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
+            DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)");
+        }
+        return returnValue
+    }
     
 }

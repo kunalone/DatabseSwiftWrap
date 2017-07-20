@@ -34,22 +34,22 @@ class ViewController: UIViewController {
             //executed successflly
         }
 
-        /*
+        
         let dataArray = ["Kunal", "Pune", "314"]
         
-        let string = "INSERT INTO StudentInfo Values('?','?','?')"
+        let string = "INSERT INTO StudentInfo Values(?,?,?)"
         
         let threeDoubles = Array(repeating: dataArray, count: 1000)
 
         
-        DatabaseSingleton.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
+        DatabaseSingleton.transactionWithParametersFTS4(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
             if result == true{
                 print("transaction successful")
                 // transcation executed successfully
             }
         }
-*/
-        let theData = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE StudentInfo MATCH 'Kunal1'")
+
+        let theData = DatabaseSingleton.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE StudentInfo MATCH 'Kunal'")
         
         print(theData)
         
