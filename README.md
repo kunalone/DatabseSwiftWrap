@@ -77,7 +77,6 @@ All kind of select queries has to use this method
 ```swift
 let theData = DatabaseSingleton.executeQuery(queryString: "SELECT * FROM Student")
 
-print(theData)
 ```
 
 This method is for transaction operations for same query and multiple parameteres
