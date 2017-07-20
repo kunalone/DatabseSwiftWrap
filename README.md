@@ -94,7 +94,7 @@ print("transaction successful")
 }
 }
 ```
-For FTS tables methods with same code flow are implemented in sample code above you can expore them fell free toi let me know the issues and contributing. 
+For FTS tables methods with same code flow are implemented in sample code above you can explore them feel free to let us know the issues and contributing as well. 
 
 ## Built With
 
