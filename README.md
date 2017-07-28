@@ -49,7 +49,7 @@ DatabaseSingleton.closeDB()
 ```swift
 DatabaseSingleton.enableLog = true
 ```
-### Setting library
+### Migration from normal table to FTS table 
 MigrateTableToFTS4String Method below can be user to convert the normal tables to FTS tables
 ```swift
 DatabaseHandler.MigrateTableToFTS4String(tableName: "Student") { (result) in
@@ -61,6 +61,29 @@ DatabaseHandler.MigrateTableToFTS4String(tableName: "Student") { (result) in
     }
 }
 ```
+### Transaction query execution on FTS table
+The transactionWithParametersFTS4 method is for transaction operations on FTS table for same query and multiple parameteres
+- parameter query: String of query to be executed with "?" at the place of arguments EXA: Insert into Table (_id, ColumnName) Values(?,?)
+- parameter dataArray: This is array of arrays with values for the query to be    executed in transcation
+- return completion: This is completion handler which will return true for the Successful execution
+
+```swift
+let dataArray = ["Kunal", "Pune", "314"]
+
+let string = "INSERT INTO StudentInfo Values(?,?,?)"
+
+let threeDoubles = Array(repeating: dataArray, count: 1000)
+
+
+DatabaseHandler.transactionWithParametersFTS4(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
+if result == true{
+print("transaction successful")
+// transcation executed successfully
+}
+}
+```
+
+#### Other CURD operations can be performed using executeUpdateForFTS4 and executeQueryForFTS4 methods just like normal operations following is the demo for normal databse queries
 
 ### Setting library CRUD operations
 
