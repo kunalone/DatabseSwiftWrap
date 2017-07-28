@@ -20,7 +20,9 @@ Follow everything on getting started and then start implementing methods for fol
 
 Working with this file is easy using its singleton obejct.
 
-This method is used to copy database from main applications bundle to doccument diredtory
+
+### Setting library
+The copyDatabseIfNeedeD method is used to copy database from main applications bundle to doccument diredtory
 - parameter dbName: dbName A name of the database to be copied from main bundle
 - parameter ofType: An extension of the db like db,sqlite
 
@@ -28,27 +30,41 @@ This method is used to copy database from main applications bundle to doccument 
 DatabaseSingleton.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
 ```
 
-This method to be called to open the database
+The openDb to be called to open the database
 - parameter DBname: String of database name Exa: "Data.sqlite"
 
 ```swift
 DatabaseSingleton.openDb(DBname: "TestDatabase.sqlite")
 ```
 
-This method to be called to close the database
+The closeDB method to be called to close the database
 
 ```swift
 DatabaseSingleton.closeDB()
 ```
 
 
- If this flag is false wont print query errors on the log
+ If enableLog flag is false wont print query errors on the log
 
 ```swift
 DatabaseSingleton.enableLog = true
 ```
+### Setting library
+MigrateTableToFTS4String Method below can be user to convert the normal tables to FTS tables
+```swift
+DatabaseHandler.MigrateTableToFTS4String(tableName: "Student") { (result) in
+    if result == true{
+        print("migration working ")
+    }
+    else{
+        print("Migration failed")
+    }
+}
+```
 
-This method is to execute update like queries like UPDATE, DELETE, INSERT
+### Setting library CRUD operations
+
+The executeUpdate method is to execute update like queries like UPDATE, DELETE, INSERT
 - parameter queryString: String of query to be executed with "?" at the place of arguments EXA- Insert into Table (_id, ColumnName) Values(?,?)
 - parameter parameters: Array of all the parameters to be added in queries
 - return BOOL: Success or failure of the query execution
@@ -70,7 +86,7 @@ if updateResult == true {
 
 ```
 
-All kind of select queries has to use this method
+All kind of select queries has to use executeQuery method
 - parameter queryString:  the query Exa: SELECT * from TableName
 - return [AnyObject]: Array of dictonary [String: String]
 
@@ -79,7 +95,7 @@ let theData = DatabaseSingleton.executeQuery(queryString: "SELECT * FROM Student
 
 ```
 
-This method is for transaction operations for same query and multiple parameteres
+The transactionWithParameters method is for transaction operations for same query and multiple parameteres
 - parameter query: String of query to be executed with "?" at the place of arguments EXA: Insert into Table (_id, ColumnName) Values(?,?)
 - parameter dataArray: This is array of arrays with values for the query to be    executed in transcation
 - return completion: This is completion handler which will return true for the Successful execution

@@ -6,22 +6,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Mothods creating FTS and non FTS tables and manuplating them are impelmented in functiond given.
         
-//       DatabaseHandler.MigrateTableToFTS4String(tableName: "Student") { (result) in
-//            if result == true{
-//                print("migration working ")
-//            }
-//            else{
-//                print("Migration failed")
-//            }
-//        }
-        //trayingAllDatabse()
-        //saveData()
-        // Do any additional setup after loading the view, typically from a nib.
+        // MARK: Demo databse table is empty. Developers can just start uncommenting the mothod calls
+        //databaseMethods()
+        //databaseMethodsFTS()
     }
-    //let aStr = String(format: "%@%x", "timeNow in hex: ", timeNow)
-
-    func saveData () {
+    
+// MARK: All the FTS databse methods examples
+    func databaseMethodsFTS() {
         let emptyArray:[AnyObject] = []
         for index in 0 ... 10 {
             let strName = String(format:"Kunal%d",index)
@@ -82,11 +75,22 @@ class ViewController: UIViewController {
         let theData6 = DatabaseHandler.executeQueryForFTS4(queryString: "SELECT * FROM StudentInfo WHERE StudentInfo MATCH 'ios NEAR/7 Developer'")
         print(theData6)
         
+        
+        // MARK: Databse migration method
+        // Method below can be user to convert the normal tables to FTS tables 
+       /* DatabaseHandler.MigrateTableToFTS4String(tableName: "Student") { (result) in
+            if result == true{
+                print("migration working ")
+            }
+            else{
+                print("Migration failed")
+            }
+        }*/
 
 
     }
-    
-    func trayingAllDatabse(){
+    // MARK: All the normal databse methods examples
+    func databaseMethods(){
         let emptyArray:[AnyObject] = []
         
         // If this flag is false wont print query errors on the log

@@ -16,7 +16,7 @@ limitations under the License.
  */
 import UIKit
 import Foundation
-
+// MARK: DatabaseHandler contains interface methods with other classes all the methoda in this are class methods in order to keep things simple
 class DatabaseHandler {
     static let serialQueue = DispatchQueue(label: "databaseQueue")
     typealias successCompletaionHandler = (_ succcess:Bool)->()
@@ -30,15 +30,7 @@ class DatabaseHandler {
     private init() {
         
     }
-    /**
-     This method is used to Migrate your database from normal to FTS
-     - parameter tableName: name of existing table to convert from normal table 
-     */
-    public class func MigrateTableToFTS4String(tableName:String, completion: @escaping successCompletaionHandler){
-        self.DB.migrateTableToFTSTable(tableName: tableName) { (result) in
-            completion(result)
-        }
-    }
+    
     
     /**
       This method is used to copy database from main applications bundle to doccument diredtory
@@ -166,6 +158,16 @@ class DatabaseHandler {
                     completion(false)
                 }
             }
+        }
+    }
+    
+    /**
+     This method is used to Migrate your database from normal to FTS
+     - parameter tableName: name of existing table to convert from normal table
+     */
+    public class func MigrateTableToFTS4String(tableName:String, completion: @escaping successCompletaionHandler){
+        self.DB.migrateTableToFTSTable(tableName: tableName) { (result) in
+            completion(result)
         }
     }
 
