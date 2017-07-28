@@ -14,7 +14,7 @@
 		041927E11EA5DC5000BCBEE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 041927DF1EA5DC5000BCBEE4 /* LaunchScreen.storyboard */; };
 		041927EC1EA5DC5000BCBEE4 /* databaseTempTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041927EB1EA5DC5000BCBEE4 /* databaseTempTests.swift */; };
 		041927F71EA5DC5000BCBEE4 /* databaseTempUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041927F61EA5DC5000BCBEE4 /* databaseTempUITests.swift */; };
-		041928051EA5DCA000BCBEE4 /* DatabaseSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041928041EA5DCA000BCBEE4 /* DatabaseSingleton.swift */; };
+		041928051EA5DCA000BCBEE4 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041928041EA5DCA000BCBEE4 /* DatabaseHandler.swift */; };
 		0419280D1EA5DD7100BCBEE4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0419280B1EA5DD7100BCBEE4 /* libsqlite3.0.tbd */; };
 		0419280E1EA5DD7100BCBEE4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0419280C1EA5DD7100BCBEE4 /* libsqlite3.tbd */; };
 		E92E06DA1F0B6C2900C3BACA /* TestDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E92E06D91F0B6C2900C3BACA /* TestDatabase.sqlite */; };
@@ -38,20 +38,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		041927D31EA5DC5000BCBEE4 /* databaseTemp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = databaseTemp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		041927D31EA5DC5000BCBEE4 /* DatabaseExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatabaseExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		041927D61EA5DC5000BCBEE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		041927D81EA5DC5000BCBEE4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		041927DB1EA5DC5000BCBEE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		041927DD1EA5DC5000BCBEE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		041927E01EA5DC5000BCBEE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		041927E21EA5DC5000BCBEE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		041927E71EA5DC5000BCBEE4 /* databaseTempTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = databaseTempTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		041927E71EA5DC5000BCBEE4 /* DatabaseExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DatabaseExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		041927EB1EA5DC5000BCBEE4 /* databaseTempTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = databaseTempTests.swift; sourceTree = "<group>"; };
 		041927ED1EA5DC5000BCBEE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		041927F21EA5DC5000BCBEE4 /* databaseTempUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = databaseTempUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		041927F21EA5DC5000BCBEE4 /* DatabaseExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DatabaseExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		041927F61EA5DC5000BCBEE4 /* databaseTempUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = databaseTempUITests.swift; sourceTree = "<group>"; };
 		041927F81EA5DC5000BCBEE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		041928041EA5DCA000BCBEE4 /* DatabaseSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseSingleton.swift; sourceTree = "<group>"; };
+		041928041EA5DCA000BCBEE4 /* DatabaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		041928061EA5DD5900BCBEE4 /* databaseTemp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "databaseTemp-Bridging-Header.h"; sourceTree = "<group>"; };
 		0419280B1EA5DD7100BCBEE4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		0419280C1EA5DD7100BCBEE4 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -99,9 +99,9 @@
 		041927D41EA5DC5000BCBEE4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				041927D31EA5DC5000BCBEE4 /* databaseTemp.app */,
-				041927E71EA5DC5000BCBEE4 /* databaseTempTests.xctest */,
-				041927F21EA5DC5000BCBEE4 /* databaseTempUITests.xctest */,
+				041927D31EA5DC5000BCBEE4 /* DatabaseExample.app */,
+				041927E71EA5DC5000BCBEE4 /* DatabaseExampleTests.xctest */,
+				041927F21EA5DC5000BCBEE4 /* DatabaseExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				041927D61EA5DC5000BCBEE4 /* AppDelegate.swift */,
-				041928041EA5DCA000BCBEE4 /* DatabaseSingleton.swift */,
+				041928041EA5DCA000BCBEE4 /* DatabaseHandler.swift */,
 				041927D81EA5DC5000BCBEE4 /* ViewController.swift */,
 				E92E06D91F0B6C2900C3BACA /* TestDatabase.sqlite */,
 				041927DA1EA5DC5000BCBEE4 /* Main.storyboard */,
@@ -152,9 +152,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		041927D21EA5DC5000BCBEE4 /* databaseTemp */ = {
+		041927D21EA5DC5000BCBEE4 /* DatabaseExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 041927FB1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "databaseTemp" */;
+			buildConfigurationList = 041927FB1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "DatabaseExample" */;
 			buildPhases = (
 				041927CF1EA5DC5000BCBEE4 /* Sources */,
 				041927D01EA5DC5000BCBEE4 /* Frameworks */,
@@ -164,14 +164,14 @@
 			);
 			dependencies = (
 			);
-			name = databaseTemp;
+			name = DatabaseExample;
 			productName = databaseTemp;
-			productReference = 041927D31EA5DC5000BCBEE4 /* databaseTemp.app */;
+			productReference = 041927D31EA5DC5000BCBEE4 /* DatabaseExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		041927E61EA5DC5000BCBEE4 /* databaseTempTests */ = {
+		041927E61EA5DC5000BCBEE4 /* DatabaseExampleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 041927FE1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "databaseTempTests" */;
+			buildConfigurationList = 041927FE1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "DatabaseExampleTests" */;
 			buildPhases = (
 				041927E31EA5DC5000BCBEE4 /* Sources */,
 				041927E41EA5DC5000BCBEE4 /* Frameworks */,
@@ -182,14 +182,14 @@
 			dependencies = (
 				041927E91EA5DC5000BCBEE4 /* PBXTargetDependency */,
 			);
-			name = databaseTempTests;
+			name = DatabaseExampleTests;
 			productName = databaseTempTests;
-			productReference = 041927E71EA5DC5000BCBEE4 /* databaseTempTests.xctest */;
+			productReference = 041927E71EA5DC5000BCBEE4 /* DatabaseExampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		041927F11EA5DC5000BCBEE4 /* databaseTempUITests */ = {
+		041927F11EA5DC5000BCBEE4 /* DatabaseExampleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 041928011EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "databaseTempUITests" */;
+			buildConfigurationList = 041928011EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "DatabaseExampleUITests" */;
 			buildPhases = (
 				041927EE1EA5DC5000BCBEE4 /* Sources */,
 				041927EF1EA5DC5000BCBEE4 /* Frameworks */,
@@ -200,9 +200,9 @@
 			dependencies = (
 				041927F41EA5DC5000BCBEE4 /* PBXTargetDependency */,
 			);
-			name = databaseTempUITests;
+			name = DatabaseExampleUITests;
 			productName = databaseTempUITests;
-			productReference = 041927F21EA5DC5000BCBEE4 /* databaseTempUITests.xctest */;
+			productReference = 041927F21EA5DC5000BCBEE4 /* DatabaseExampleUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -232,7 +232,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 041927CE1EA5DC5000BCBEE4 /* Build configuration list for PBXProject "databaseTemp" */;
+			buildConfigurationList = 041927CE1EA5DC5000BCBEE4 /* Build configuration list for PBXProject "DatabaseExample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -245,9 +245,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				041927D21EA5DC5000BCBEE4 /* databaseTemp */,
-				041927E61EA5DC5000BCBEE4 /* databaseTempTests */,
-				041927F11EA5DC5000BCBEE4 /* databaseTempUITests */,
+				041927D21EA5DC5000BCBEE4 /* DatabaseExample */,
+				041927E61EA5DC5000BCBEE4 /* DatabaseExampleTests */,
+				041927F11EA5DC5000BCBEE4 /* DatabaseExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -285,7 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				041928051EA5DCA000BCBEE4 /* DatabaseSingleton.swift in Sources */,
+				041928051EA5DCA000BCBEE4 /* DatabaseHandler.swift in Sources */,
 				041927D91EA5DC5000BCBEE4 /* ViewController.swift in Sources */,
 				041927D71EA5DC5000BCBEE4 /* AppDelegate.swift in Sources */,
 			);
@@ -312,12 +312,12 @@
 /* Begin PBXTargetDependency section */
 		041927E91EA5DC5000BCBEE4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 041927D21EA5DC5000BCBEE4 /* databaseTemp */;
+			target = 041927D21EA5DC5000BCBEE4 /* DatabaseExample */;
 			targetProxy = 041927E81EA5DC5000BCBEE4 /* PBXContainerItemProxy */;
 		};
 		041927F41EA5DC5000BCBEE4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 041927D21EA5DC5000BCBEE4 /* databaseTemp */;
+			target = 041927D21EA5DC5000BCBEE4 /* DatabaseExample */;
 			targetProxy = 041927F31EA5DC5000BCBEE4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -476,7 +476,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.neosofttech.databaseTempTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/databaseTemp.app/databaseTemp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DatabaseExample.app/DatabaseExample";
 			};
 			name = Debug;
 		};
@@ -490,7 +490,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.neosofttech.databaseTempTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/databaseTemp.app/databaseTemp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DatabaseExample.app/DatabaseExample";
 			};
 			name = Release;
 		};
@@ -523,7 +523,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		041927CE1EA5DC5000BCBEE4 /* Build configuration list for PBXProject "databaseTemp" */ = {
+		041927CE1EA5DC5000BCBEE4 /* Build configuration list for PBXProject "DatabaseExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				041927F91EA5DC5000BCBEE4 /* Debug */,
@@ -532,7 +532,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		041927FB1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "databaseTemp" */ = {
+		041927FB1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "DatabaseExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				041927FC1EA5DC5000BCBEE4 /* Debug */,
@@ -541,7 +541,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		041927FE1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "databaseTempTests" */ = {
+		041927FE1EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "DatabaseExampleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				041927FF1EA5DC5000BCBEE4 /* Debug */,
@@ -550,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		041928011EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "databaseTempUITests" */ = {
+		041928011EA5DC5000BCBEE4 /* Build configuration list for PBXNativeTarget "DatabaseExampleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				041928021EA5DC5000BCBEE4 /* Debug */,

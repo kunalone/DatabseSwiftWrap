@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "041927D21EA5DC5000BCBEE4"
-               BuildableName = "databaseTemp.app"
-               BlueprintName = "databaseTemp"
-               ReferencedContainer = "container:databaseTemp.xcodeproj">
+               BuildableName = "DatabaseExample.app"
+               BlueprintName = "DatabaseExample"
+               ReferencedContainer = "container:DatabaseExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "041927E61EA5DC5000BCBEE4"
-               BuildableName = "databaseTempTests.xctest"
-               BlueprintName = "databaseTempTests"
-               ReferencedContainer = "container:databaseTemp.xcodeproj">
+               BuildableName = "DatabaseExampleTests.xctest"
+               BlueprintName = "DatabaseExampleTests"
+               ReferencedContainer = "container:DatabaseExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "041927F11EA5DC5000BCBEE4"
-               BuildableName = "databaseTempUITests.xctest"
-               BlueprintName = "databaseTempUITests"
-               ReferencedContainer = "container:databaseTemp.xcodeproj">
+               BuildableName = "DatabaseExampleUITests.xctest"
+               BlueprintName = "DatabaseExampleUITests"
+               ReferencedContainer = "container:DatabaseExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "041927D21EA5DC5000BCBEE4"
-            BuildableName = "databaseTemp.app"
-            BlueprintName = "databaseTemp"
-            ReferencedContainer = "container:databaseTemp.xcodeproj">
+            BuildableName = "DatabaseExample.app"
+            BlueprintName = "DatabaseExample"
+            ReferencedContainer = "container:DatabaseExample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "041927D21EA5DC5000BCBEE4"
-            BuildableName = "databaseTemp.app"
-            BlueprintName = "databaseTemp"
-            ReferencedContainer = "container:databaseTemp.xcodeproj">
+            BuildableName = "DatabaseExample.app"
+            BlueprintName = "DatabaseExample"
+            ReferencedContainer = "container:DatabaseExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "041927D21EA5DC5000BCBEE4"
-            BuildableName = "databaseTemp.app"
-            BlueprintName = "databaseTemp"
-            ReferencedContainer = "container:databaseTemp.xcodeproj">
+            BuildableName = "DatabaseExample.app"
+            BlueprintName = "DatabaseExample"
+            ReferencedContainer = "container:DatabaseExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

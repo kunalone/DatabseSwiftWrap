@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  databaseTemp
-//
-//  Created by webwerks on 18/04/17.
-//  Copyright © 2017 webwerks. All rights reserved.
-//
 
 import UIKit
 
@@ -15,10 +8,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+          let pathtoDucuments:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) [0] as String
+        print(pathtoDucuments)
+        
         // Override point for customization after application launch.
-        DatabaseSingleton.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
-        DatabaseSingleton.openDb(DBname: "TestDatabase.sqlite")
-        //DatabaseSingleton.openDb(DBname: "TestDatabase.sqlite")
+        DatabaseHandler.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
+        DatabaseHandler.openDb(DBname: "TestDatabase.sqlite")
+        //DatabaseHandler.openDb(DBname: "TestDatabase.sqlite")
         return true
     }
 
@@ -41,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        DatabaseSingleton.sharedInstance.closeDB()
+        DatabaseHandler.closeDB()
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 

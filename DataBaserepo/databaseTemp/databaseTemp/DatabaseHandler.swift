@@ -17,7 +17,7 @@ limitations under the License.
 import UIKit
 import Foundation
 
-class DatabaseSingleton {
+class DatabaseHandler {
     static let serialQueue = DispatchQueue(label: "databaseQueue")
     typealias successCompletaionHandler = (_ succcess:Bool)->()
     static var enableLog = true;
@@ -25,11 +25,19 @@ class DatabaseSingleton {
     var databasename = ""
     static var databasePath = ""
     
-    static let sharedInstance = DatabaseSingleton()
     static fileprivate var DB :TheDB = TheDB()
     
     private init() {
         
+    }
+    /**
+     This method is used to Migrate your database from normal to FTS
+     - parameter tableName: name of existing table to convert from normal table 
+     */
+    public class func MigrateTableToFTS4String(tableName:String, completion: @escaping successCompletaionHandler){
+        self.DB.migrateTableToFTSTable(tableName: tableName) { (result) in
+            completion(result)
+        }
     }
     
     /**
@@ -52,6 +60,8 @@ class DatabaseSingleton {
             let pathToBundledb = Bundle.main.path(forResource:dbName, ofType:ofType)! as String
             
             let pathtoDucuments:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) [0] as String
+            
+            
             let finalPath = pathtoDucuments.appending("/\(dbName).\(ofType)")
             
             do {
@@ -95,7 +105,7 @@ class DatabaseSingleton {
         var returnValue = false
         serialQueue.sync {
             //DB.trial()
-            returnValue = DB.executUpdate(queryString: queryString, parameters: parameters)
+            returnValue = DB.executeUpdate(queryString: queryString, parameters: parameters)
         }
         return returnValue
     }
@@ -122,7 +132,7 @@ class DatabaseSingleton {
         var returnValue = false
         serialQueue.sync {
             //DB.trial()
-            returnValue = DB.executUpdate(queryString: queryString, parameters: parameters)
+            returnValue = DB.executeUpdate(queryString: queryString, parameters: parameters)
         }
         return returnValue
     }
@@ -167,15 +177,15 @@ class DatabaseSingleton {
         let pathtoDucuments:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) [0] as String
         let finalPath = pathtoDucuments.appending("/\(DBname)")
         
-        DatabaseSingleton.databasePath=finalPath;
-        DatabaseSingleton.DB.openDB();
+        DatabaseHandler.databasePath=finalPath;
+        DatabaseHandler.DB.openDB();
     }
+    
     /**
      This method to be called to Close the database
      */
-    
-    public func closeDB(){
-        DatabaseSingleton.DB.closeDB()
+    public class func closeDB(){
+        DatabaseHandler.DB.closeDB()
     }
     
     fileprivate class func printOnLog(text: String){
@@ -189,7 +199,69 @@ fileprivate struct TheDB {
     var sqliteDB: OpaquePointer? = nil
     typealias successCompletaionHandler = (_ succcess:Bool)->()
     public var dbPath = ""
+    var columnNameArray:[String] = []
+    var values:[[String]] = [[]]
+    let emptyArray:[AnyObject] = []
     
+    fileprivate mutating func migrateTableToFTSTable(tableName:String,completion: @escaping successCompletaionHandler ){
+        let query = "SELECT * FROM \(tableName)"
+        let recoreds = executeCcommand(query: query)
+        
+        if recoreds.count > 0 {
+            let firstRecord = recoreds[0] as! [String: AnyObject]
+            let keysArray = firstRecord.keys;
+            columnNameArray = Array(keysArray.map { ($0) })
+            print(firstRecord.keys)
+        }
+        else{
+            DatabaseHandler.printOnLog(text: "This is empty table")
+            DispatchQueue.main.async {
+                completion(false)
+            }
+            
+        }
+        
+        for dictonary in recoreds {
+            let firstRecord = dictonary as! [String: AnyObject]
+            let keysArray = firstRecord.values;
+            let tempArray = Array(keysArray.map { ($0) }) as! [String]
+            values.append(tempArray)
+        }
+        
+        if values.count == 0 {
+            DatabaseHandler.printOnLog(text: "This is empty table")
+            DispatchQueue.main.async {
+                completion(false)
+            }
+        }
+        
+        var columnString = columnNameArray.joined(separator: " TEXT,")
+        columnString = columnString.appending(" TEXT")
+        
+        
+        let FTStableQuery = "CREATE VIRTUAL TABLE \(tableName)FTS4 USING FTS4(\(columnString))"
+        print(FTStableQuery)
+        
+        let result = executeUpdate(queryString: FTStableQuery, parameters: emptyArray)
+        let questionMarkArray = Array(repeating: "?", count: columnNameArray.count)
+        let placeholderSring = questionMarkArray.joined(separator: ",")
+        let insertQuery = "INSERT INTO \(tableName)FTS4 Values(\(placeholderSring))"
+        
+        if result == true {
+            transactionFTS4(qureyString: insertQuery, parameres: values as [[AnyObject]], completion: { (result) in
+                if result == true{
+                    DispatchQueue.main.async {
+                        completion(true)
+                    }
+                }
+                else{
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                }
+            })
+        }
+    }
     
     fileprivate func transaction(qureyString: String, parameres : [[AnyObject]],completion :@escaping successCompletaionHandler){
         var transacstionStatus = true;
@@ -197,24 +269,31 @@ fileprivate struct TheDB {
         sqlite3_exec(sqliteDB, "BEGIN EXCLUSIVE TRANSACTION", nil, nil, nil);
         let buffer = qureyString;
         var statement: OpaquePointer? = nil
+        //sqlite3_prepare_v2(sqliteDB, buffer, Int32(strlen(buffer)),&statement, nil)
+        
         sqlite3_prepare_v2(sqliteDB, buffer, Int32(strlen(buffer)),&statement, nil)
         
-        for array:Array in parameres {
+        for array:[AnyObject] in parameres {
             for (index,item) in array.enumerated() {
+               
                 let theIndex = index + 1
                 if item is Int {
                     sqlite3_bind_int(statement, Int32(theIndex), item as! Int32)
                 }
                 
                 if item is String {
-                    sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
+                    let temp = sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
+                    if temp != SQLITE_OK {
+                        let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
+                        DatabaseHandler.printOnLog(text: "the error \(errorMessage!)")
+                    }
                 }
             }
             
             if sqlite3_step(statement) != SQLITE_DONE {
                 let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
-                DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)")
-                DatabaseSingleton.printOnLog(text: "Commit Failed!")
+                DatabaseHandler.printOnLog(text: "the error \(errorMessage!)")
+                DatabaseHandler.printOnLog(text: "Commit Failed!")
                 transacstionStatus = false
                 completion(false)
             }
@@ -229,32 +308,34 @@ fileprivate struct TheDB {
     }
     
     
-    fileprivate func executUpdate(queryString: String, parameters: [AnyObject])->Bool{
+    fileprivate func executeUpdate(queryString: String, parameters: [AnyObject])->Bool{
         var returnValue = false
         var statement: OpaquePointer? = nil
         if sqlite3_prepare_v2(sqliteDB, queryString, -1, &statement, nil) == SQLITE_OK {
-            
-            for (index,item) in parameters.enumerated() {
-                let theIndex = index + 1
-                if item is Int {
-                    sqlite3_bind_int(statement, Int32(theIndex), item as! Int32)
+            if parameters.count > 0 {
+                for (index,item) in parameters.enumerated() {
+                    let theIndex = index + 1
+                    if item is Int {
+                        sqlite3_bind_int(statement, Int32(theIndex), item as! Int32)
+                    }
+                    
+                    if item is String {
+                        sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
+                    }
                 }
-                
-                if item is String {
-                    sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
-                }
+
             }
             
             if sqlite3_step(statement) == SQLITE_DONE {
                 returnValue = true
-                DatabaseSingleton.printOnLog(text: "Successfully executed query");
+                DatabaseHandler.printOnLog(text: "Successfully executed query");
             } else {
-                DatabaseSingleton.printOnLog(text: "Failed executed query");
+                DatabaseHandler.printOnLog(text: "Failed executed query");
             }
         } else {
-            DatabaseSingleton.printOnLog(text: "Error while Executing -> \(queryString)");
+            DatabaseHandler.printOnLog(text: "Error while Executing -> \(queryString)");
             let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
-            DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)");
+            DatabaseHandler.printOnLog(text: "the error \(errorMessage!)");
         }
         return returnValue
     }
@@ -265,12 +346,12 @@ fileprivate struct TheDB {
         
         let status = sqlite3_prepare_v2(sqliteDB, query, -1, &pStmt, nil)
         if status != SQLITE_OK {
-            DatabaseSingleton.printOnLog(text: "Error while Executing -> \(query)");
+            DatabaseHandler.printOnLog(text: "Error while Executing -> \(query)");
             let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
-            DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)");
+            DatabaseHandler.printOnLog(text: "the error \(errorMessage!)");
         }
         else{
-            DatabaseSingleton.printOnLog(text: "Successfully executed query");
+            DatabaseHandler.printOnLog(text: "Successfully executed query");
             while sqlite3_step(pStmt) == SQLITE_ROW {
                 var row:[String: AnyObject] = [:]
                 let resultCount = sqlite3_column_count(pStmt)
@@ -293,13 +374,13 @@ fileprivate struct TheDB {
     //Opening database
     fileprivate mutating func openDB(){
         
-        let status = sqlite3_open(DatabaseSingleton.databasePath.cString(using: String.Encoding.utf8)!, &sqliteDB)
+        let status = sqlite3_open(DatabaseHandler.databasePath.cString(using: String.Encoding.utf8)!, &sqliteDB)
         if status != SQLITE_OK {
-            DatabaseSingleton.printOnLog(text: "SwiftData Error -> During: Opening Database")
+            DatabaseHandler.printOnLog(text: "SwiftData Error -> During: Opening Database")
             sqlite3_errmsg(sqliteDB)
         }
         else{
-            DatabaseSingleton.printOnLog(text: "databse opened successfully")
+            DatabaseHandler.printOnLog(text: "databse opened successfully")
         }
     }
     
@@ -353,7 +434,7 @@ fileprivate struct TheDB {
             // print("SwiftData Warning -> The text date at column: \(index) could not be castas!a String, returning nil")
         //return nil
         default:
-            DatabaseSingleton.printOnLog(text: "SwiftData Warning -> Column: \(index) is of an unrecognized type, returning nil")
+            DatabaseHandler.printOnLog(text: "SwiftData Warning -> Column: \(index) is of an unrecognized type, returning nil")
             return nil
         }
         
@@ -366,12 +447,12 @@ fileprivate struct TheDB {
         
         let status = sqlite3_prepare_v2(sqliteDB, query, -1, &pStmt, nil)
         if status != SQLITE_OK {
-            DatabaseSingleton.printOnLog(text: "Error while Executing -> \(query)");
+            DatabaseHandler.printOnLog(text: "Error while Executing -> \(query)");
             let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
-            DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)");
+            DatabaseHandler.printOnLog(text: "the error \(errorMessage!)");
         }
         else{
-            DatabaseSingleton.printOnLog(text: "Successfully executed query");
+            DatabaseHandler.printOnLog(text: "Successfully executed query");
             while sqlite3_step(pStmt) == SQLITE_ROW {
                 var row:[String: AnyObject] = [:]
                 let resultCount = sqlite3_column_count(pStmt)
@@ -401,16 +482,19 @@ fileprivate struct TheDB {
         var statement: OpaquePointer? = nil
         sqlite3_prepare_v2(sqliteDB, buffer, Int32(strlen(buffer)),&statement, nil)
         
-        for array:Array in parameres {
+        for array:[AnyObject] in parameres {
             for (index,item) in array.enumerated() {
                 let theIndex = index + 1
                 
                 if item is String {
                     sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
                 }
+                else if item is Int {
+                    sqlite3_bind_int(statement, Int32(theIndex), item as! Int32)
+                }
                 else{
-                    DatabaseSingleton.printOnLog(text: "Commit Failed!")
-                    DatabaseSingleton.printOnLog(text: "For FTS4 transaction every entry shoud be String")
+                    DatabaseHandler.printOnLog(text: "Commit Failed!")
+                    DatabaseHandler.printOnLog(text: "For FTS4 transaction every entry shoud be String")
                     transacstionStatus = false
                     completion(transacstionStatus)
                 }
@@ -418,8 +502,8 @@ fileprivate struct TheDB {
             
             if sqlite3_step(statement) != SQLITE_DONE {
                 let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
-                DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)")
-                DatabaseSingleton.printOnLog(text: "Commit Failed!")
+                DatabaseHandler.printOnLog(text: "the error \(errorMessage!)")
+                DatabaseHandler.printOnLog(text: "Commit Failed!")
                 transacstionStatus = false
                 completion(false)
             }
@@ -445,22 +529,22 @@ fileprivate struct TheDB {
                     sqlite3_bind_text(statement, Int32(theIndex), item.utf8String, -1, nil)
                 }
                 else{
-                    DatabaseSingleton.printOnLog(text: "Commit Failed!")
-                    DatabaseSingleton.printOnLog(text: "For FTS4 transaction every entry shoud be String")
+                    DatabaseHandler.printOnLog(text: "Commit Failed!")
+                    DatabaseHandler.printOnLog(text: "For FTS4 transaction every entry shoud be String")
                     return false
                 }
             }
             
             if sqlite3_step(statement) == SQLITE_DONE {
                 returnValue = true
-                DatabaseSingleton.printOnLog(text: "Successfully executed query");
+                DatabaseHandler.printOnLog(text: "Successfully executed query");
             } else {
-                DatabaseSingleton.printOnLog(text: "Failed executed query");
+                DatabaseHandler.printOnLog(text: "Failed executed query");
             }
         } else {
-            DatabaseSingleton.printOnLog(text: "Error while Executing -> \(queryString)");
+            DatabaseHandler.printOnLog(text: "Error while Executing -> \(queryString)");
             let errorMessage = String(utf8String: sqlite3_errmsg(sqliteDB))
-            DatabaseSingleton.printOnLog(text: "the error \(errorMessage!)");
+            DatabaseHandler.printOnLog(text: "the error \(errorMessage!)");
         }
         return returnValue
     }
