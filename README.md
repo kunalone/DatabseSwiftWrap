@@ -7,7 +7,7 @@ A simple database wrapper for database operations in swift 3.0, basic methods. S
 
 ## Getting Started
 
-Copy or clone the repository on your mac, find DatabaseSingleton.swift file in the project and copy it in your project. Create birdging header file for your project and import sqlite fiel into it Exa: #import<sqlite3.h> 
+Copy or clone the repository on your mac, find DatabaseHandler.swift file in the project and copy it in your project. Create birdging header file for your project and import sqlite fiel into it Exa: #import<sqlite3.h> 
 
 ### Prerequisites
 
@@ -27,27 +27,27 @@ The copyDatabseIfNeedeD method is used to copy database from main applications b
 - parameter ofType: An extension of the db like db,sqlite
 
 ```swift
-DatabaseSingleton.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
+DatabaseHandler.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
 ```
 
 The openDb to be called to open the database
 - parameter DBname: String of database name Exa: "Data.sqlite"
 
 ```swift
-DatabaseSingleton.openDb(DBname: "TestDatabase.sqlite")
+DatabaseHandler.openDb(DBname: "TestDatabase.sqlite")
 ```
 
 The closeDB method to be called to close the database
 
 ```swift
-DatabaseSingleton.closeDB()
+DatabaseHandler.closeDB()
 ```
 
 
  If enableLog flag is false wont print query errors on the log
 
 ```swift
-DatabaseSingleton.enableLog = true
+DatabaseHandler.enableLog = true
 ```
 ### Migration from normal table to FTS table 
 MigrateTableToFTS4String Method below can be user to convert the normal tables to FTS tables
@@ -92,7 +92,7 @@ The executeUpdate method is to execute update like queries like UPDATE, DELETE, 
 - return BOOL: Success or failure of the query execution
 
 ```swift
-let result = DatabaseSingleton.executeUpdate(queryString: "INSERT INTO Student Values('Kunal','Pune','314')", parameters: emptyArray)
+let result = DatabaseHandler.executeUpdate(queryString: "INSERT INTO Student Values('Kunal','Pune','314')", parameters: emptyArray)
 
 if result == true{
 //executed successflly
@@ -100,7 +100,7 @@ if result == true{
 
 let updateQuery:String = "UPDATE Student SET name = ? Where address = ?"
 
-let updateResult = DatabaseSingleton.executeUpdate(queryString: updateQuery, parameters: ["One" as AnyObject,"pune" as AnyObject])
+let updateResult = DatabaseHandler.executeUpdate(queryString: updateQuery, parameters: ["One" as AnyObject,"pune" as AnyObject])
 
 if updateResult == true {
 //executed successflly
@@ -113,7 +113,7 @@ All kind of select queries has to use executeQuery method
 - return [AnyObject]: Array of dictonary [String: String]
 
 ```swift
-let theData = DatabaseSingleton.executeQuery(queryString: "SELECT * FROM Student")
+let theData = DatabaseHandler.executeQuery(queryString: "SELECT * FROM Student")
 
 ```
 
@@ -125,7 +125,7 @@ The transactionWithParameters method is for transaction operations for same quer
 ```swift
 let threeDoubles = Array(repeating: dataArray, count: 1000)
 
-DatabaseSingleton.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
+DatabaseHandler.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
 if result == true{
 print("transaction successful")
 // transcation executed successfully
