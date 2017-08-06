@@ -81,9 +81,8 @@ print("transaction successful")
 // transcation executed successfully
 }
 }
-```
 
-#### Other CURD operations can be performed using executeUpdateForFTS4 and executeQueryForFTS4 methods just like normal operations following is the demo for normal databse queries
+#### Other CRUD operations can be performed using executeUpdateForFTS4 and executeQueryForFTS4 methods just like normal operations following is the demo for normal databse queries
 
 ### Setting library CRUD operations
 
