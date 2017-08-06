@@ -37,7 +37,7 @@ class DatabaseHandler {
       - parameter dbName: dbName A name of the database to be copied from main bundle
       - parameter ofType: An extension of the db like db,sqlite
      */
-    public class func copyDatabseIfNeedeD(dbName: String ,extenstion ofType :String){
+    public class func copyDatabseIfNeedeD(dbName: String ,extension ofType :String){
        // var databasePath = ""
 
         let pathtoDucuments:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) [0] as String

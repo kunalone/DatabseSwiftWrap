@@ -3,11 +3,11 @@ Database wrapper for iOS using swift
 
 # DatabseSwiftWrap
 
-A simple database wrapper for database operations in swift 3.0, basic methods. Simple installation no pods of flags. Currently implemented for basic queries and transactions. Comming soon feature is support for FTS tables support. 
+A simple database wrapper for database operations in swift 3.0, basic methods. Simple installation no pods of flags. Currently implemented for basic queries and transactions.  
 
 ## Getting Started
 
-Copy or clone the repository on your mac, find DatabaseHandler.swift file in the project and copy it in your project. Create birdging header file for your project and import sqlite fiel into it Exa: #import<sqlite3.h> 
+Copy or clone the repository on your mac, find DatabaseHandler.swift file in the project and copy it in your project. Create bridging header file for your project and import sqlite file into it Exa: #import<sqlite3.h> 
 
 ### Prerequisites
 
@@ -18,16 +18,16 @@ SQlite3
 
 Follow everything on getting started and then start implementing methods for following examples 
 
-Working with this file is easy using its singleton obejct.
+Working with this file is easy using its singleton object.
 
 
 ### Setting library
-The copyDatabseIfNeedeD method is used to copy database from main applications bundle to doccument diredtory
+The copyDatabseIfNeedeD method is used to copy database from main applications bundle to document directory
 - parameter dbName: dbName A name of the database to be copied from main bundle
 - parameter ofType: An extension of the db like db,sqlite
 
 ```swift
-DatabaseHandler.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
+DatabaseHandler.copyDatabseIfNeedeD(dbName: "TestDatabase", extension: "sqlite")
 ```
 
 The openDb to be called to open the database
@@ -62,9 +62,9 @@ DatabaseHandler.MigrateTableToFTS4String(tableName: "Student") { (result) in
 }
 ```
 ### Transaction query execution on FTS table
-The transactionWithParametersFTS4 method is for transaction operations on FTS table for same query and multiple parameteres
+The transactionWithParametersFTS4 method is for transaction operations on FTS table for same query and multiple parameters
 - parameter query: String of query to be executed with "?" at the place of arguments EXA: Insert into Table (_id, ColumnName) Values(?,?)
-- parameter dataArray: This is array of arrays with values for the query to be    executed in transcation
+- parameter dataArray: This is array of arrays with values for the query to be    executed in transaction
 - return completion: This is completion handler which will return true for the Successful execution
 
 ```swift
@@ -78,11 +78,11 @@ let threeDoubles = Array(repeating: dataArray, count: 1000)
 DatabaseHandler.transactionWithParametersFTS4(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
 if result == true{
 print("transaction successful")
-// transcation executed successfully
+// transaction executed successfully
 }
 }
 ```
-#### Other CRUD operations can be performed using executeUpdateForFTS4 and executeQueryForFTS4 methods just like normal operations following is the demo for normal databse queries
+#### Other CRUD operations can be performed using executeUpdateForFTS4 and executeQueryForFTS4 methods just like normal operations following is the demo for normal database queries
 
 ### Setting library CRUD operations
 
@@ -95,7 +95,7 @@ The executeUpdate method is to execute update like queries like UPDATE, DELETE, 
 let result = DatabaseHandler.executeUpdate(queryString: "INSERT INTO Student Values('Kunal','Pune','314')", parameters: emptyArray)
 
 if result == true{
-//executed successflly
+//executed successfully
 }
 
 let updateQuery:String = "UPDATE Student SET name = ? Where address = ?"
@@ -103,23 +103,23 @@ let updateQuery:String = "UPDATE Student SET name = ? Where address = ?"
 let updateResult = DatabaseHandler.executeUpdate(queryString: updateQuery, parameters: ["One" as AnyObject,"pune" as AnyObject])
 
 if updateResult == true {
-//executed successflly
+//executed successfully
 }
 
 ```
 
 All kind of select queries has to use executeQuery method
 - parameter queryString:  the query Exa: SELECT * from TableName
-- return [AnyObject]: Array of dictonary [String: String]
+- return [AnyObject]: Array of dictionary [String: String]
 
 ```swift
 let theData = DatabaseHandler.executeQuery(queryString: "SELECT * FROM Student")
 
 ```
 
-The transactionWithParameters method is for transaction operations for same query and multiple parameteres
+The transactionWithParameters method is for transaction operations for same query and multiple parameters
 - parameter query: String of query to be executed with "?" at the place of arguments EXA: Insert into Table (_id, ColumnName) Values(?,?)
-- parameter dataArray: This is array of arrays with values for the query to be    executed in transcation
+- parameter dataArray: This is array of arrays with values for the query to be    executed in transaction
 - return completion: This is completion handler which will return true for the Successful execution
 
 ```swift
@@ -128,7 +128,7 @@ let threeDoubles = Array(repeating: dataArray, count: 1000)
 DatabaseHandler.transactionWithParameters(query: string, dataArray: threeDoubles as [[AnyObject]]) { (result) in
 if result == true{
 print("transaction successful")
-// transcation executed successfully
+// transaction executed successfully
 }
 }
 ```

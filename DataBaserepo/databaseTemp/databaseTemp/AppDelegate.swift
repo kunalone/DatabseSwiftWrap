@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(pathtoDucuments)
         
         // Override point for customization after application launch.
-        DatabaseHandler.copyDatabseIfNeedeD(dbName: "TestDatabase", extenstion: "sqlite")
+        DatabaseHandler.copyDatabseIfNeedeD(dbName: "TestDatabase", extension: "sqlite")
         DatabaseHandler.openDb(DBname: "TestDatabase.sqlite")
         //DatabaseHandler.openDb(DBname: "TestDatabase.sqlite")
         return true
